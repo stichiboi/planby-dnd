@@ -28,10 +28,13 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build && bundlewatch",
     "size": "bundlewatch",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "husky": {
     "hooks": {
@@ -76,10 +79,23 @@
     "events"
   ],
   "devDependencies": {
+    "@babel/core": "^7.21.0",
     "@faker-js/faker": "^6.1.2",
     "@size-limit/preset-small-lib": "^7.0.8",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
     "@types/jest": "^27.4.0",
     "@types/react": "^17.0.38",
+    "babel-jest": "^29.5.0",
+    "babel-loader": "^8.3.0",
     "bundlewatch": "^0.3.3",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
