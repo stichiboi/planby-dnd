@@ -2,7 +2,7 @@ import React from "react";
 import { ThemeProvider, Global } from "@emotion/react";
 
 // Import interfaces
-import { Theme } from "./helpers/interfaces";
+import { Theme } from "./helpers";
 
 // Import helpers
 import { TIMELINE_HEIGHT } from "./helpers";
@@ -13,7 +13,7 @@ import { globalStyles, EpgStyled } from "./styles";
 // Import components
 import { Loader } from "./components";
 
-interface EpgProps {
+export interface EpgProps {
   width?: number;
   height?: number;
   isRTL?: boolean;
@@ -47,11 +47,11 @@ export const Epg = React.forwardRef<HTMLDivElement, EpgProps>(
     },
     containerRef
   ) => {
-    const renderLoader = () => LoaderComponent ?? <Loader />;
+    const renderLoader = () => LoaderComponent ?? <Loader/>;
     const epgGlobalStyles = customGlobalStyles ?? globalStyles;
     return (
       <ThemeProvider theme={theme}>
-        <Global styles={epgGlobalStyles} />
+        <Global styles={epgGlobalStyles}/>
         <Container
           className="planby"
           data-testid="container"

@@ -101,7 +101,7 @@ export const getProgramPosition = (
     endDate,
     hourWidth
   );
-  const top = itemHeight * channelIndex;
+  const top = 0;// itemHeight * channelIndex;
   let left = getPositionX(startDate, item.since, startDate, endDate, hourWidth);
   const edgeEnd = getPositionX(
     startDate,
@@ -134,14 +134,15 @@ interface ConvertedPrograms {
   itemHeight: number;
   hourWidth: number;
 }
+
 export const getConvertedPrograms = ({
-  data,
-  channels,
-  startDate,
-  endDate,
-  itemHeight,
-  hourWidth,
-}: ConvertedPrograms) =>
+                                       data,
+                                       channels,
+                                       startDate,
+                                       endDate,
+                                       itemHeight,
+                                       hourWidth,
+                                     }: ConvertedPrograms) =>
   data.map((next) => {
     const channelIndex = channels.findIndex(
       ({ uuid }) => uuid === next.channelUuid

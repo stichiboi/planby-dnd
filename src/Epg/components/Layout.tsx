@@ -57,6 +57,12 @@ interface LayoutProps {
     isRTL: boolean;
     isBaseTimeFormat: BaseTimeFormat;
   }) => React.ReactNode;
+
+  renderProgramWrapper?: (v: {
+    channel: ChannelWithPosition,
+    children: React.ReactNode
+  }) => React.ReactNode;
+
   renderChannel?: (v: { channel: ChannelWithPosition }) => React.ReactNode;
   renderTimeline?: (v: RenderTimeline) => React.ReactNode;
 }
@@ -81,6 +87,7 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
       isProgramVisible,
       isChannelVisible,
       renderProgram,
+      renderProgramWrapper,
       renderChannel,
       renderTimeline,
     } = props;
@@ -167,9 +174,20 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
           width={dayWidth}
           height={contentHeight}
         >
-          {programs.map((program) =>
-            renderPrograms(program as ProgramWithPosition)
-          )}
+          {channels.map(channel => {
+            const { uuid } = channel;
+            const children: React.ReactNode = programs
+              .filter(({ data }) => data.channelUuid === uuid)
+              .map(program => renderPrograms(program as ProgramWithPosition))
+            if (renderProgramWrapper) {
+              return renderProgramWrapper({ channel, children });
+            }
+            return (
+              <div key={uuid} style={{ position: "relative", height: itemHeight }}>
+                {children}
+              </div>
+            )
+          })}
         </Content>
       </ScrollBox>
     );
