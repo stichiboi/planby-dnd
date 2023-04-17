@@ -4,17 +4,13 @@ import { differenceInMinutes, getTime } from 'date-fns';
 import { Channel, Program } from './interfaces';
 
 // Import types
-import { ProgramWithPosition, Position, DateTime } from './types';
+import { DateTime, Position, ProgramWithPosition } from './types';
 
 // Import variables
 import { HOUR_IN_MINUTES } from './variables';
 
 // Import time helpers
-import {
-  formatTime,
-  roundToMinutes,
-  isYesterday as isYesterdayTime,
-} from './time';
+import { formatTime, isYesterday as isYesterdayTime, roundToMinutes } from './time';
 import { getDate } from './common';
 
 // -------- Program width --------
@@ -71,11 +67,10 @@ export const getChannelPosition = (
   itemHeight: number,
 ) => {
   const top = itemHeight * channelIndex;
-  const position = {
+  return {
     top,
     height: itemHeight,
   };
-  return position;
 };
 // -------- Program position in the Epg --------
 export const getProgramPosition = (
@@ -196,9 +191,5 @@ export const getSidebarItemVisibility = (
     return false;
   }
 
-  if (scrollY + containerHeight <= position.top) {
-    return false;
-  }
-
-  return true;
+  return scrollY + containerHeight > position.top;
 };
