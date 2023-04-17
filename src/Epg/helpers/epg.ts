@@ -1,21 +1,21 @@
-import { differenceInMinutes, getTime } from "date-fns";
+import { differenceInMinutes, getTime } from 'date-fns';
 
 // Import interfaces
-import { Channel, Program } from "./interfaces";
+import { Channel, Program } from './interfaces';
 
 // Import types
-import { ProgramWithPosition, Position, DateTime } from "./types";
+import { ProgramWithPosition, Position, DateTime } from './types';
 
 // Import variables
-import { HOUR_IN_MINUTES } from "./variables";
+import { HOUR_IN_MINUTES } from './variables';
 
 // Import time helpers
 import {
   formatTime,
   roundToMinutes,
   isYesterday as isYesterdayTime,
-} from "./time";
-import { getDate } from "./common";
+} from './time';
+import { getDate } from './common';
 
 // -------- Program width --------
 const getItemDiffWidth = (diff: number, hourWidth: number) =>
@@ -26,7 +26,7 @@ export const getPositionX = (
   till: DateTime,
   startDate: DateTime,
   endDate: DateTime,
-  hourWidth: number
+  hourWidth: number,
 ) => {
   const isTomorrow = getTime(getDate(till)) > getTime(getDate(endDate));
   const isYesterday = getTime(getDate(since)) < getTime(getDate(startDate));
@@ -35,7 +35,7 @@ export const getPositionX = (
   if (isYesterday && isTomorrow) {
     const diffTime = differenceInMinutes(
       roundToMinutes(getDate(endDate)),
-      getDate(startDate)
+      getDate(startDate),
     );
     return getItemDiffWidth(diffTime, hourWidth);
   }
@@ -43,7 +43,7 @@ export const getPositionX = (
   if (isYesterday) {
     const diffTime = differenceInMinutes(
       roundToMinutes(getDate(till)),
-      getDate(startDate)
+      getDate(startDate),
     );
     return getItemDiffWidth(diffTime, hourWidth);
   }
@@ -51,7 +51,7 @@ export const getPositionX = (
   if (isTomorrow) {
     const diffTime = differenceInMinutes(
       getDate(endDate),
-      roundToMinutes(getDate(since))
+      roundToMinutes(getDate(since)),
     );
 
     if (diffTime < 0) return 0;
@@ -59,17 +59,16 @@ export const getPositionX = (
   }
 
   const diffTime = differenceInMinutes(
-    roundToMinutes(getDate(till)),
-    roundToMinutes(getDate(since))
+    roundToMinutes(till),
+    roundToMinutes(since),
   );
-
   return getItemDiffWidth(diffTime, hourWidth);
 };
 
 // -------- Channel position in the Epg --------
 export const getChannelPosition = (
   channelIndex: number,
-  itemHeight: number
+  itemHeight: number,
 ) => {
   const top = itemHeight * channelIndex;
   const position = {
@@ -81,11 +80,11 @@ export const getChannelPosition = (
 // -------- Program position in the Epg --------
 export const getProgramPosition = (
   program: Program,
-  channelIndex: number,
+  _: number,
   itemHeight: number,
   hourWidth: number,
   startDate: DateTime,
-  endDate: DateTime
+  endDate: DateTime,
 ) => {
   const item = {
     ...program,
@@ -93,13 +92,12 @@ export const getProgramPosition = (
     till: formatTime(program.till),
   };
   const isYesterday = isYesterdayTime(item.since, startDate);
-
   let width = getPositionX(
     item.since,
     item.till,
     startDate,
     endDate,
-    hourWidth
+    hourWidth,
   );
   const top = 0;// itemHeight * channelIndex;
   let left = getPositionX(startDate, item.since, startDate, endDate, hourWidth);
@@ -108,7 +106,7 @@ export const getProgramPosition = (
     item.till,
     startDate,
     endDate,
-    hourWidth
+    hourWidth,
   );
 
   if (isYesterday) left = 0;
@@ -145,7 +143,7 @@ export const getConvertedPrograms = ({
                                      }: ConvertedPrograms) =>
   data.map((next) => {
     const channelIndex = channels.findIndex(
-      ({ uuid }) => uuid === next.channelUuid
+      ({ uuid }) => uuid === next.channelUuid,
     );
     return getProgramPosition(
       next,
@@ -153,7 +151,7 @@ export const getConvertedPrograms = ({
       itemHeight,
       hourWidth,
       startDate,
-      endDate
+      endDate,
     );
   }, [] as ProgramWithPosition[]);
 
@@ -171,7 +169,7 @@ export const getItemVisibility = (
   scrollX: number,
   containerHeight: number,
   containerWidth: number,
-  itemOverscan: number
+  itemOverscan: number,
 ) => {
   if (position.width <= 0) {
     return false;
@@ -180,26 +178,19 @@ export const getItemVisibility = (
   if (scrollY > position.top + itemOverscan * 3) {
     return false;
   }
-
   if (scrollY + containerHeight <= position.top) {
     return false;
   }
 
-  if (
-    scrollX + containerWidth >= position.left &&
-    scrollX <= position.edgeEnd
-  ) {
-    return true;
-  }
-
-  return false;
+  return scrollX + containerWidth >= position.left &&
+    scrollX <= position.edgeEnd;
 };
 
 export const getSidebarItemVisibility = (
-  position: Pick<Position, "top">,
+  position: Pick<Position, 'top'>,
   scrollY: number,
   containerHeight: number,
-  itemOverscan: number
+  itemOverscan: number,
 ) => {
   if (scrollY > position.top + itemOverscan * 3) {
     return false;

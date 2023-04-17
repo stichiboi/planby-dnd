@@ -102,7 +102,6 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
     const renderPrograms = (program: ProgramWithPosition) => {
       const { position } = program;
       const isVisible = isProgramVisible(position);
-
       if (isVisible) {
         const options = getProgramOptions(program);
         if (renderProgram)
@@ -178,7 +177,8 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
             const { uuid } = channel;
             const children: React.ReactNode = programs
               .filter(({ data }) => data.channelUuid === uuid)
-              .map(program => renderPrograms(program as ProgramWithPosition))
+              .map(program => renderPrograms(program as ProgramWithPosition));
+
             if (renderProgramWrapper) {
               return renderProgramWrapper({ channel, children });
             }
