@@ -5,7 +5,6 @@ import {
   ProgramBox,
   ProgramContent,
   ProgramFlex,
-  ProgramImage,
   ProgramItem,
   ProgramStack,
   ProgramText,
@@ -44,7 +43,6 @@ export function SortableItem({ program, ...rest }: ProgramItem): JSX.Element {
     () => (
       <ProgramContent width={styles.width} isLive={isLive}>
         <ProgramFlex>
-          {isLive && isMinWidth && <ProgramImage src={image} alt="Preview"/>}
           <ProgramStack>
             <ProgramTitle>{title}</ProgramTitle>
             <ProgramText>

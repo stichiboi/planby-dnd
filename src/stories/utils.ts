@@ -66,7 +66,7 @@ export const fixedData = [
         "channelUuid": "0",
         "title": "Chicken",
         "description": "Quod itaque dolorem quia quasi est est. Dolore dolores dicta. Eos dolorem et. Odit explicabo consequatur. Cumque autem sit ducimus qui perferendis rem eaque. Numquam debitis ducimus autem quis animi dignissimos molestiae.",
-        "since": 0,
+        "since": "2023-03-12T19:16:48.549Z",
         "till": "2023-03-12T20:16:48.549Z",
         "id": "0_0",
         "image": "some image"
